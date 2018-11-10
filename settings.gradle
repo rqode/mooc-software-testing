@@ -1,0 +1,14 @@
+pluginManagement {
+  repositories {
+      maven {
+         //url = System.env.ALT_REPO_URL
+         url = System.env.GRADLE_PLUGIN_REPO_URL
+      }
+      gradlePluginPortal()
+      ivy {
+          url 'ivy-repo'
+      }
+  }
+}
+
+rootProject.name = 'testing-mooc'

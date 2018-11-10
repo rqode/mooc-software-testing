@@ -43,6 +43,15 @@ cmake-build-debug/
 # IntelliJ
 /out/
 
+#eclipse & gradle
+.classpath
+.project
+.settings
+.gradlecaches
+.gradle
+bin/
+build/
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 

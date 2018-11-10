@@ -1,0 +1,72 @@
+plugins {
+    id 'java' apply true
+    id 'maven' apply true
+    id 'eclipse' apply true
+    id 'jacoco' apply true
+    // https://github.com/radarsh/gradle-test-logger-plugin
+    id 'com.adarshr.test-logger' version '1.5.0' apply true
+}
+
+if (System.env.ALT_REPO_URL != null) {
+    repositories {
+        maven { url = System.env.ALT_REPO_URL }
+    }
+}
+else {
+    repositories {
+//        mavenCentral()
+//          jcenter()
+          maven { 
+              url "http://repo.maven.apache.org/maven2" 
+          } 
+    }
+}
+
+group = 'nl.tudelft'
+version = '1.0-SNAPSHOT'
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+dependencies {
+    compile group: 'com.intellij', name: 'annotations', version:'12.0'
+    compile group: 'org.mockito', name: 'mockito-core', version:'2.16.0'
+    compile group: 'org.hsqldb', name: 'hsqldb', version:'2.4.0'
+
+    testImplementation(
+        'org.junit.jupiter:junit-jupiter-api:5.2.0',
+        'org.junit.jupiter:junit-jupiter-params:5.2.0'
+    )
+    testRuntimeOnly(
+        'org.junit.jupiter:junit-jupiter-engine:5.2.0',
+        // for JUnit 4
+        'org.junit.vintage:junit-vintage-engine:5.2.0'
+    )
+}
+
+test {
+    // enable JUnit 5 Support
+    useJUnitPlatform()
+
+    testLogging {   
+        exceptionFormat = 'full'
+        info {  
+            showStandardStreams = true
+            exceptionFormat = 'full'
+            events "passed", "skipped", "failed"
+        }
+    }
+
+    reports {
+        // test report for the individual sub-project test task
+        // when using testReport task this can be disabled as the task aggregates
+        html.enabled = true 
+    }
+}
+
+//testlogger {
+//    theme 'mocha'
+//}
+
